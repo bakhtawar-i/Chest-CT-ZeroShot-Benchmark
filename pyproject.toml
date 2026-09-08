@@ -1,0 +1,14 @@
+[project]
+name = "chest-ct-zeroshot-benchmark"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+chest-ct-zeroshot-benchmark = "chest_ct_zeroshot_benchmark:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
