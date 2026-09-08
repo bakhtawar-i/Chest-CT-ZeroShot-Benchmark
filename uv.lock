@@ -1,0 +1,8 @@
+version = 1
+revision = 3
+requires-python = ">=3.11"
+
+[[package]]
+name = "chest-ct-zeroshot-benchmark"
+version = "0.1.0"
+source = { editable = "." }

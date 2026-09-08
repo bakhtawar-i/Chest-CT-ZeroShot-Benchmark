@@ -1,0 +1,67 @@
+***********************************************
+Phase 0: Set up Environment + Clone CT-RATE
+***********************************************
+
+1. Initialize repo
+
+-> uv init
+
+2. Clone the CT-CLIP repo 
+
+-> git clone https://github.com/ibrahimethemhamamci/CT-CLIP.git external/ct-clip
+
+cd external/ct-clip/transformer_maskgit
+uv pip install -e .
+cd ../CT_CLIP
+uv pip install -e .
+cd ~/projects/Chest-CT-ZeroShot-Benchmark
+
+
+***************************************************************
+Phase 1: Get CT-CRATE + Checkpoint Access
+***************************************************************
+
+1. Create a Hugging Face account, accept the CT-RATE gate on the dataset page, generate an access token (Settings → Access Tokens).
+
+-> save token as HF_TOKEN=<your_access_token> in .env 
+
+2. Download the small CSVs first (cheap, not the volumes): validation_metadata.csv, validation_reports.csv, valid_labels.csv (or the multi_abnormality_labels/valid_predicted_labels.csv equivalent).
+
+-> uv pip install huggingface_hub
+-> uv run python EDA/get_csvs.py 
+
+3. Take a random subset of ~100-150 VolumeNames from valid_labels.csv.
+
+-> uv run python EDA/get_subset.py 
+
+4. Adapt the download script: fix the folder path to dataset/valid_fixed/, use your subset list instead of the full file, pull your HF token from an environment variable instead of hardcoding it.
+
+-> no longer required as this is already taken care of in the new labels 
+-> use HfApi().list_repo_files() to get the dataset's actual file list from HF directly, then filter — instead of manually rebuilding paths from VolumeName strings and hoping the convention matches
+-> taking first 100 samples
+
+5. Sanity check one volume before downloading the rest: load it, check whether raw pixel values already look like real HU (air ≈ -1000) before applying the script's slope/intercept correction. If they already do, we skip that step in preprocessing; if not, we keep it as written.
+
+-> uv run python EDA/sanity_check.py 
+-> these are already rescaled values as per the documentation so no need to preprocess 
+
+
+***************************************************************
+Phase 2: Get CT-RATE + Checkpoint Access
+***************************************************************
+
+
+***************************************************************
+Phase 1: Get CT-CRATE + Checkpoint Access
+***************************************************************
+
+
+***************************************************************
+Phase 1: Get CT-CRATE + Checkpoint Access
+***************************************************************
+
+
+***************************************************************
+Phase 1: Get CT-CRATE + Checkpoint Access
+***************************************************************
+
