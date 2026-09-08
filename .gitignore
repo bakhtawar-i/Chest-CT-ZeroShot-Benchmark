@@ -1,3 +1,4 @@
 .env
 .venv
-data_volumes 
+data_volumes
+checkpoints

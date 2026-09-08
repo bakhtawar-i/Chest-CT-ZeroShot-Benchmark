@@ -47,21 +47,34 @@ Phase 1: Get CT-CRATE + Checkpoint Access
 
 
 ***************************************************************
-Phase 2: Get CT-RATE + Checkpoint Access
+Phase 2: CT-CLIP + BiomedCLIP 
 ***************************************************************
 
+1. Download the checkpoint. 
+--> Same hf_hub_download pattern as the CSVs, pointed at models/CT-CLIP-Related/CT-CLIP_v2.pt (a few GB, so this'll take a bit).
+
+-> uv run python src/chest_ct_zeroshot_benchmark/get_checkpoint.py 
+
+2. Fork the dataset class with the intensity fix. 
+--> Copy CTReportDatasetinfer out of data_inference_nii.py into your own repo, 
+--> and in nii_img_to_tensor, delete the line img_data = slope * img_data + intercept — the volumes are already HU-corrected, so we go straight from the loaded array to the HU clip step. 
+--> Keep the resample-to-target-spacing, /1000 normalization, and crop/pad logic exactly as written.
+
+-> uv run python src/chest_ct_zeroshot_benchmark/dataset_fixed.py 
+
+3. Run CT-CLIP zero-shot inference. 
+--> Use run_zero_shot.py as the template, pointed at your local checkpoint, your data_volumes folder, and the three CSVs — but swap in your fixed dataset class. 
+--> Save per-volume, per-finding probability scores to disk (a CSV or dataframe) rather than just letting it print results, so you have raw scores for both models to compare later.
+
+4. Build the BiomedCLIP baseline on the same preprocessed volumes. 
+--> Reuse the same fixed preprocessing function up through the point where you have a clean 3D HU tensor, extract axial slices from it, embed each slice with BiomedCLIP's image tower, mean-pool to a volume-level embedding, 
+--> then score against the identical "{finding} is present." / "{finding} is not present." prompt pairs with softmax — same scoring logic as CT-CLIP, just swapping the vision backbone. 
+--> This keeps the comparison fair since both models see the same preprocessed input and the same prompt phrasing.
+
+5. Compute metrics for both, side by side. 
+--> Per-finding AUC-ROC and F1 via sklearn (mirroring eval.py's approach), across your 100-volume subset, for CT-CLIP and BiomedCLIP separately. 
+--> This table is our actual result.
 
 ***************************************************************
-Phase 1: Get CT-CRATE + Checkpoint Access
+Phase 3: Documentation 
 ***************************************************************
-
-
-***************************************************************
-Phase 1: Get CT-CRATE + Checkpoint Access
-***************************************************************
-
-
-***************************************************************
-Phase 1: Get CT-CRATE + Checkpoint Access
-***************************************************************
-
