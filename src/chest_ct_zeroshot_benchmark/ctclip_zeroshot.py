@@ -47,7 +47,12 @@ clip = CTCLIP(
     extra_latent_projection=False, use_mlm=False,
     downsample_image_embeds=False, use_all_token_embeds=False
 )
-clip.load(CHECKPOINT_PATH)
+# clip.load(CHECKPOINT_PATH)
+state_dict = torch.load(CHECKPOINT_PATH, map_location=device)
+missing, unexpected = clip.load_state_dict(state_dict, strict=False)
+print("Missing keys:", missing)
+print("Unexpected keys:", unexpected)
+
 clip.to(device)
 clip.eval()
 
