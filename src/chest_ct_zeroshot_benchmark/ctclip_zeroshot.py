@@ -59,7 +59,8 @@ clip.eval()
 # --- dataset ---
 ds = CTReportDatasetFixed(data_folder=DATA_FOLDER, reports_file=REPORTS_CSV, meta_file=META_CSV, labels=LABELS_CSV)
 # ds.samples = ds.samples[:2]  # TEMP: sanity check before full 100-volume run
-dl = DataLoader(ds, num_workers=4, batch_size=1, shuffle=False)
+# dl = DataLoader(ds, num_workers=4, batch_size=1, shuffle=False)
+dl = DataLoader(ds, num_workers=0, batch_size=1, shuffle=False)
 
 predicted_all = []
 real_all = []

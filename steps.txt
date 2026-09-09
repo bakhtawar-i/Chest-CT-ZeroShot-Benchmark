@@ -71,8 +71,53 @@ Phase 2: CT-CLIP + BiomedCLIP
 
 -> create s3 bucket - upload data_volumes, checkpoints, raw_csvs
 -> create ec2 instance and ssh in 
--> 
+-> chmod 400 your-key.pem
+-> ssh -i "your-key.pem" ubuntu@<public-ip-or-dns>
 
+-> install uv as it is not already in AMI 
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+-> clone repo 
+git clone https://github.com/bakhtawar-i/Chest-CT-ZeroShot-Benchmark
+cd Chest-CT-ZeroShot-Benchmark
+
+-> sync everything
+uv venv
+source .venv/bin/activate
+
+uv pip install -e external/ct-clip/transformer_maskgit
+uv pip install -e external/ct-clip/CT_CLIP
+uv pip install transformers accelerate nibabel scikit-learn pandas numpy
+
+-> add the valid_labels.csv
+--> curl -L -o valid_labels.csv https://raw.githubusercontent.com/sezginerr/example_download_script/main/valid_labels.csv
+--> aws s3 cp valid_labels.csv s3://chest-ct-zeroshot-benchmark/valid_labels.csv
+
+-> pull data from S3 to instance 
+aws s3 sync s3://chest-ct-zeroshot-benchmark/checkpoints/ checkpoints/
+aws s3 sync s3://chest-ct-zeroshot-benchmark/data_volumes/ data_volumes/
+aws s3 cp s3://chest-ct-zeroshot-benchmark/validation_metadata.csv validation_metadata.csv
+aws s3 cp s3://chest-ct-zeroshot-benchmark/validation_reports.csv validation_reports.csv
+
+-> reclone the external ct-clip repo to the instance 
+git clone https://github.com/ibrahimethemhamamci/CT-CLIP.git external/ct-clip
+cd external/ct-clip/transformer_maskgit
+uv pip install -e .
+cd ../CT_CLIP
+uv pip install -e .
+cd ~/Chest-CT-ZeroShot-Benchmark
+
+-> sanity check 
+--> python -c "import transformer_maskgit; import ct_clip; import transformers; import nibabel; import sklearn; print('all good')"
+--> python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+
+-> run the pipeline on the 100 samples to get results - in tmux 
+tmux new -s ctclip
+uv run python src/chest_ct_zeroshot_benchmark/ctclip_zeroshot.py
+
+--> reattach
+tmux attach -t ctclip
 
 4. Build the BiomedCLIP baseline on the same preprocessed volumes. 
 --> Reuse the same fixed preprocessing function up through the point where you have a clean 3D HU tensor, extract axial slices from it, embed each slice with BiomedCLIP's image tower, mean-pool to a volume-level embedding, 
