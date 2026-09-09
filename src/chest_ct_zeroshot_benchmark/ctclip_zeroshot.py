@@ -58,7 +58,7 @@ clip.eval()
 
 # --- dataset ---
 ds = CTReportDatasetFixed(data_folder=DATA_FOLDER, reports_file=REPORTS_CSV, meta_file=META_CSV, labels=LABELS_CSV)
-ds.samples = ds.samples[:2]  # TEMP: sanity check before full 100-volume run
+# ds.samples = ds.samples[:2]  # TEMP: sanity check before full 100-volume run
 dl = DataLoader(ds, num_workers=4, batch_size=1, shuffle=False)
 
 predicted_all = []
@@ -104,3 +104,25 @@ for i, path_name in enumerate(pathologies):
 metrics_df = pd.DataFrame(rows)
 metrics_df.to_csv(f"{RESULTS_DIR}/ctclip_metrics.csv", index=False)
 print(metrics_df)
+
+
+
+#                                finding  auc   f1  n_positive
+# 0                     Medical material  NaN  0.0           0
+# 1          Arterial wall calcification  NaN  0.0           0
+# 2                         Cardiomegaly  NaN  0.0           0
+# 3                 Pericardial effusion  NaN  0.0           0
+# 4   Coronary artery wall calcification  NaN  0.0           0
+# 5                        Hiatal hernia  NaN  0.0           2
+# 6                      Lymphadenopathy  NaN  0.0           2
+# 7                            Emphysema  NaN  1.0           2
+# 8                          Atelectasis  NaN  0.0           0
+# 9                          Lung nodule  NaN  1.0           2
+# 10                        Lung opacity  NaN  0.0           2
+# 11          Pulmonary fibrotic sequela  NaN  0.0           2
+# 12                    Pleural effusion  NaN  0.0           0
+# 13          Mosaic attenuation pattern  NaN  0.0           0
+# 14            Peribronchial thickening  NaN  0.0           0
+# 15                       Consolidation  NaN  0.0           2
+# 16                      Bronchiectasis  NaN  0.0           0
+# 17      Interlobular septal thickening  NaN  0.0           0
