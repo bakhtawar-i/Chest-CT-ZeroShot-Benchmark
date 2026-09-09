@@ -3,6 +3,8 @@
 Comparing a 3D-native medical vision-language model against a naive 2D slice-pooled
 baseline on zero-shot multi-abnormality classification, using CT-RATE.
 
+![CT-CLIP vs BiomedCLIP](figures/methodology.png)
+
 ## Motivation
 
 Most vision-language models operate on 2D images. Medical imaging is often
@@ -48,6 +50,8 @@ Zero-shot performance across 18 CT-RATE findings, 100-volume subset:
 
 Full per-finding breakdown in `results/ctclip_zeroshot/ctclip_metrics.csv` and
 `results/biomedclip_zeroshot/biomedclip_metrics.csv`.
+
+![CT-CLIP vs BiomedCLIP AUC comparison](figures/ctclip_vs_biomedclip_auc.png)
 
 **A more interesting finding than the raw gap**: on some findings (e.g. pleural
 effusion), BiomedCLIP's AUC is competitive with or even slightly exceeds
