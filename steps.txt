@@ -131,9 +131,15 @@ tmux attach -t ctclip
 --> then score against the identical "{finding} is present." / "{finding} is not present." prompt pairs with softmax — same scoring logic as CT-CLIP, just swapping the vision backbone. 
 --> This keeps the comparison fair since both models see the same preprocessed input and the same prompt phrasing.
 
+-> uv pip install open_clip_torch pillow
+-> uv run python src/chest_ct_zeroshot_benchmark/biomedclip_zeroshot.py 
+
+
 5. Compute metrics for both, side by side. 
 --> Per-finding AUC-ROC and F1 via sklearn (mirroring eval.py's approach), across your 100-volume subset, for CT-CLIP and BiomedCLIP separately. 
 --> This table is our actual result.
+
+-> tables updated in respective files 
 
 ***************************************************************
 Phase 3: Documentation 

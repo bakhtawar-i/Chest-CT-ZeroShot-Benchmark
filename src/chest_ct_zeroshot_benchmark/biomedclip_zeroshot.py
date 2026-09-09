@@ -108,3 +108,24 @@ for i, path_name in enumerate(pathologies):
 metrics_df = pd.DataFrame(rows)
 metrics_df.to_csv(f"{RESULTS_DIR}/biomedclip_metrics.csv", index=False)
 print(metrics_df)
+
+
+#                                finding       auc        f1  n_positive
+# 0                     Medical material  0.874521  0.000000          12
+# 1          Arterial wall calcification  0.648482  0.000000          31
+# 2                         Cardiomegaly  0.723140  0.358974          22
+# 3                 Pericardial effusion  0.710562  0.000000          18
+# 4   Coronary artery wall calcification  0.555556  0.347826          24
+# 5                        Hiatal hernia  0.213102  0.000000          16
+# 6                      Lymphadenopathy  0.522388  0.000000          32
+# 7                            Emphysema  0.498919  0.396040          25
+# 8                          Atelectasis  0.607646  0.420000          28
+# 9                          Lung nodule  0.276695  0.000000          40
+# 10                        Lung opacity  0.555503  0.476923          31
+# 11          Pulmonary fibrotic sequela  0.370531  0.148148          30
+# 12                    Pleural effusion  0.936607  0.000000          35
+# 13          Mosaic attenuation pattern  0.743789  0.153846           7
+# 14            Peribronchial thickening  0.684211  0.000000          23
+# 15                       Consolidation  0.495482  0.000000          16
+# 16                      Bronchiectasis  0.657303  0.000000          10
+# 17      Interlobular septal thickening  0.580460  0.000000          12
