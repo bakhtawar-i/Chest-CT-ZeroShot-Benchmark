@@ -3,7 +3,9 @@
 Comparing a 3D-native medical vision-language model against a naive 2D slice-pooled
 baseline on zero-shot multi-abnormality classification, using CT-RATE.
 
-![CT-CLIP vs BiomedCLIP](figures/methodology.png)
+<p align="center">
+  <img src="figures/methodology.png" alt="CT-CLIP vs BiomedCLIP" width="750">
+</p>
 
 ## Motivation
 
