@@ -107,6 +107,28 @@ metrics_df.to_csv(f"{RESULTS_DIR}/ctclip_metrics.csv", index=False)
 print(metrics_df)
 
 
+#                                finding       auc        f1  n_positive
+# 0                     Medical material  0.744253  0.347826          12
+# 1          Arterial wall calcification  0.748577  0.620690          31
+# 2                         Cardiomegaly  0.766824  0.500000          22
+# 3                 Pericardial effusion  0.687243  0.337662          18
+# 4   Coronary artery wall calcification  0.781111  0.556962          24
+# 5                        Hiatal hernia  0.496988  0.270270          16
+# 6                      Lymphadenopathy  0.618470  0.571429          32
+# 7                            Emphysema  0.745946  0.500000          25
+# 8                          Atelectasis  0.737928  0.551724          28
+# 9                          Lung nodule  0.602966  0.543689          40
+# 10                        Lung opacity  0.553605  0.439560          31
+# 11          Pulmonary fibrotic sequela  0.631884  0.481928          30
+# 12                    Pleural effusion  0.929018  0.711111          35
+# 13          Mosaic attenuation pattern  0.785714  0.203390           7
+# 14            Peribronchial thickening  0.730549  0.441558          23
+# 15                       Consolidation  0.728916  0.361111          16
+# 16                      Bronchiectasis  0.708989  0.312500          10
+# 17      Interlobular septal thickening  0.672414  0.375000          12
+
+
+# for samples=2
 
 #                                finding  auc   f1  n_positive
 # 0                     Medical material  NaN  0.0           0

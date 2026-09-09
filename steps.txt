@@ -119,6 +119,13 @@ uv run python src/chest_ct_zeroshot_benchmark/ctclip_zeroshot.py
 --> reattach
 tmux attach -t ctclip
 
+**** RESULTS ****
+
+-> 0.70 AUC overall
+-> Pleural effusion (0.929 AUC) is the standout — CT-CLIP is genuinely strong here, consistent with pleural effusion being one of the more visually distinctive findings on CT.
+-> Hiatal hernia (0.497 AUC) is essentially random-chance — worth mentioning as a genuine limitation rather than glossing over it; this kind of finding (subtle, often incidental, small structure) is a known hard case for zero-shot CLIP-style models.
+-> Mosaic attenuation pattern has only 7 positive cases in our subset — its F1 (0.20) should be read with that caveat; small n makes single metrics noisy here.
+
 4. Build the BiomedCLIP baseline on the same preprocessed volumes. 
 --> Reuse the same fixed preprocessing function up through the point where you have a clean 3D HU tensor, extract axial slices from it, embed each slice with BiomedCLIP's image tower, mean-pool to a volume-level embedding, 
 --> then score against the identical "{finding} is present." / "{finding} is not present." prompt pairs with softmax — same scoring logic as CT-CLIP, just swapping the vision backbone. 
